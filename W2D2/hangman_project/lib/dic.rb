@@ -1,0 +1,1 @@
+DIC = ["cool", "game", "fun"]
