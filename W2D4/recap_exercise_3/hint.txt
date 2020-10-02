@@ -41,7 +41,8 @@ longest_streak('aaabbb')      # => 'bbb'
 longest_streak('abc')         # => 'c'
 bi_prime?
 
-Write a method bi_prime?(num) that accepts a number as an arg and returns a boolean indicating whether or not the number is a bi-prime. A bi-prime is a positive integer that can be obtained by multiplying two prime numbers.
+Write a method bi_prime?(num) that accepts a number as an arg and returns a boolean indicating whether or not the number is a bi-prime. 
+A bi-prime is a positive integer that can be obtained by multiplying two prime numbers.
 
 For Example:
 
