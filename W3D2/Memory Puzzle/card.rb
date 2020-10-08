@@ -1,44 +1,44 @@
 class Card
-  attr_reader :face_value 
-  def initialize(face_value)
+  attr_reader :val, :face_up
+
+  VALUES = ("A".."Z").to_a
+
+  def self.random_a_deck(num_of_pairs)
+    deck = []
+    if num_of_pairs <= 26
+      return (VALUES.sample(num_of_pairs) * 2).shuffle
+    else
+      num_of_pairs.times { deck << Card.new(VALUES.sample) }
+      (deck * 2).shuffle
+    end
+  end
+
+  def inspect
+    @val
+  end
+
+  def initialize(val)
+    @val = val
     @face_up = false
-    @face_value = face_value
   end
 
-  def hide
+  def fold
     @face_up = false
   end
 
-  def face_up?
-    @face_up
+  def reveal
+    @face_up = true
   end
 
-#   def reveal
-#     @face_up = true 
-#     @face_value
-#   end
+  def ==(card1)
+    val == card1.val
+  end
 
   def to_s
-    return @face_value if @face_up
-    " "
-  end
-
-  def flip
-    @face_up = !@face_up
-  end
-
-  def ==(other_card)
-    self.face_value == other_card.face_value
+    if @face_up
+      return val
+    else
+      return " "
+    end
   end
 end
-
-# card = Card.new("Joker")
-
-# card.hide
-# p card.face_value
-# p card.face_up?
-# card.reveal
-# p card.face_up?
-
-# another_card = Card.new("Jack")
-# p card == another_card
