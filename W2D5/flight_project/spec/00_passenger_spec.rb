@@ -1,4 +1,4 @@
-require "passenger"
+equire "passenger"
 
 describe "Passenger" do
   let(:passenger) { Passenger.new("Rose") }
