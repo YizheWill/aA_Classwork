@@ -19,4 +19,5 @@ class Enrollment < ApplicationRecord
     class_name: :Course
   # has_many :students,
   # primary_key: :id,
+  # if there is foreign key it's a belongs to
 end
