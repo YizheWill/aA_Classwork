@@ -22,8 +22,7 @@ def harrison_ford
   # appeared but not as a lead actor
   Movie.joins(:actors)
     .where(actors: { name: "Harrison Ford" })
-    .joins(:castings)
-    .where.not("castings.ord = 1").group(:id).select(:id, :title)
+    .where.not("castings.ord = 1").select(:id, :title)
 end
 
 def biggest_cast
@@ -37,13 +36,15 @@ def biggest_cast
   #
   # Sometimes we need to use aggregate SQL functions like COUNT, MAX, and AVG.
   # Often these are combined with group.
+  Movie.select(:id, :title).joins(:actors).group(:id).order("COUNT(distinct actors.id) desc").limit(3)
   #
   # Find the id and title of the 3 movies with the
   # largest casts (i.e most actors)
-  Movie.joins(:castings).group(:id).order("COUNT(distinct castings.actor_id) desc").limit(3).select(:id, :title)
+  # Movie.joins(:castings).group(:id).order("COUNT(distinct castings.actor_id) desc").limit(3).select(:id, :title)
 end
 
 def directed_by_one_of(them)
+  Movie.joins(:director).where(actors: { name: them }).select(:id, :title)
   # Consider the following:
   #
   # Movie.where('yr IN (?)', years)
@@ -55,7 +56,7 @@ def directed_by_one_of(them)
   # Movie.where(yr: years)
   #
   # Find the id and title of all the movies directed by one of 'them'.
-  Movie.joins(:director).where(actors: { name: them }).select(:id, :title)
+  # Movie.joins(:director).where(actors: { name: them }).select(:id, :title)
 end
 
 def movie_names_before_1940
@@ -70,5 +71,5 @@ def movie_names_before_1940
   #
   # Use pluck to find the title of all movies made before 1940.
 
-  Movie.where("yr < 1940").pluck(:title)
+  Movie.where(yr: 0..1939).pluck(:title)
 end
