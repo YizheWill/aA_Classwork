@@ -26,8 +26,6 @@ class Chirp < ApplicationRecord
     source: :liker
   #这个得再看一遍，多看几遍maybe
 
-
-
-  User.find_by(username: 'like_mike').chirps
-  # 两个query一起跑
+  # User.find_by(username: 'like_mike').chirps
+  # # 两个query一起跑
 end
