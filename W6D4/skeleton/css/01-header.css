@@ -1,0 +1,27 @@
+body {
+  margin: 0px;
+}
+.navbar {
+  height: 60px;
+  background-color: #bbb;
+  line-height: 60px;
+}
+.container {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.btn {
+  background-color: white;
+  padding: 10px 20px;
+  width: 100px;
+  border: none;
+  border-radius: 2px;
+  display: inline;
+}
+.nav {
+  display: inline;
+  list-style-type: none;
+}
+.nav li {
+  display: inline;
+}
