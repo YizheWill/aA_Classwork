@@ -1,3 +1,6 @@
+
+
+
 def create_folders
   commands = []
   (1..11).each do |i|
@@ -10,4 +13,10 @@ def create_folders
   end
 end
 
-create_folders
+def zip(zipped_name, file_name)
+  `zip -er #{zipped_name} #{file_name}`
+end
+
+def find_and_delete(filename)
+  `find . - name #{filename} - delete`
+end
