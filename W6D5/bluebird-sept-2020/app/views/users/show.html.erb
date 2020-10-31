@@ -1,0 +1,7 @@
+<h1>This is the users show page</h1>
+<%= render 'user', banana: @user, action: 'show' %>
+<a href="<%= edit_user_url(@user)%>">Edit This User</a>
+<form action="<%=user_url(@user)%>" method="post" >
+  <input type="hidden" name="_method" value="destroy">
+  <input type="submit" value="delete">
+</form>
