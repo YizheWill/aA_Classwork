@@ -1,2 +1,14 @@
 <h1>Sessions#new</h1>
-<p>Find me in app/views/sessions/new.html.erb</p>
+<form action='<%= session_url =%>' method='POST'>
+  <% if flash&.now[:errors]&.any? %>
+    <% flash.now[:errors].each do |e| %>
+      <li><%=e%></li>
+    <% end %>
+  <% end %>
+  <label for='username'>username</label>
+  <input id='username' type='text' name='user[username]' >
+  <label for='password'>password</label>
+  <input id='password' type='text' name='user[password]'>
+  <br>
+  <input type='submit' value='Submit'>
+</form>

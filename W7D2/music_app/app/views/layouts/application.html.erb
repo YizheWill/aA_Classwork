@@ -2,14 +2,16 @@
 <html>
   <head>
     <title>MusicApp</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= csrf_meta_tags %> <%= csp_meta_tag %> <%= stylesheet_link_tag'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
+    <% if current_user %>
+      <%= button_to "sign out", session_url, method: "delete" %>
+    <% else %>
+      <%= link_to "sign in", new_session_url %>
+      <%= link_to "sign up", new_user_url %>
+    <% end %>
     <%= yield %>
   </body>
 </html>
