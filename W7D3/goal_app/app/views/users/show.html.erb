@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Username:</strong>
+  <%= @user.username %>
+</p>
+<p>
+</p>
+<p>
+  <%= render 'new_comment_form' %>
+</p>
+<p>
+  <%= render 'goal_form', user: @user %>
+</p>

@@ -1,0 +1,11 @@
+<% if user.goals.any? %>
+  <h3>Goals</h3>
+  <h1><%= user.username %>'s Goals:</h1>
+  <% user.goals.each do |goal| %>
+    <% username = user.username %>
+    <li><%= link_to "read #{username}", goal_url(goal) %></li>
+    <li><%= goal.private ? "private" : "public" %></li>
+    <li><%= goal.completed ? "Finished" : "Ongoing" %></li>
+    <%= button_to goal.completed ? "change my mind" : "complete", goal_url(goal), method: :patch %>
+  <% end %>
+<% end %>
