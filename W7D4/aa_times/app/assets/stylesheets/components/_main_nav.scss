@@ -1,0 +1,62 @@
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.left-nav > ul,
+.right-nav > ul {
+  display: flex;
+  align-items: center;
+}
+
+.left-nav {
+
+  > ul {
+    > li {
+      font-family: $sans-serif;
+      font-size: 10px;
+      text-transform: uppercase;
+      margin-left: 10px;
+      padding: 4px;
+    }
+  }
+
+  span {
+    margin-left: 5px;
+  }
+}
+
+.right-nav  {
+
+  > ul {
+
+    > li {
+      font-family: $sans-serif;
+      font-size: 10px;
+      text-transform: uppercase;
+      margin-left: 10px;
+    }
+
+    > li:last-of-type {
+      transition: background-color 0.5s;
+      font-size: 12px;
+    }
+  }
+  
+  i {
+
+  }
+}
+
+.left-nav > ul > li:hover,
+.right-nav > ul > li:last-of-type:hover {
+  background-color: $lightest-gray;
+  cursor: pointer;
+}
+
+#gear-dropdown-btn:hover .gear-dropdown{
+  display: block;
+  
+} 
+

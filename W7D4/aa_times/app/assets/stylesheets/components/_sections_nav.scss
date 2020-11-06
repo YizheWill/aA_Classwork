@@ -1,0 +1,14 @@
+ul {
+    display: flex;
+    margin: 10px auto;
+    justify-content: center;
+
+    li {
+        margin-right: 10px;
+    }
+
+    .not-all:hover {
+      background-color: $light-gray;
+      text-decoration: none;
+    }
+}
