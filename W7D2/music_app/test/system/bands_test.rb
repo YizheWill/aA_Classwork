@@ -15,6 +15,7 @@ class BandsTest < ApplicationSystemTestCase
     click_on "New Band"
 
     fill_in "Name", with: @band.name
+    fill_in "User", with: @band.user_id
     click_on "Create Band"
 
     assert_text "Band was successfully created"
@@ -26,6 +27,7 @@ class BandsTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Name", with: @band.name
+    fill_in "User", with: @band.user_id
     click_on "Update Band"
 
     assert_text "Band was successfully updated"

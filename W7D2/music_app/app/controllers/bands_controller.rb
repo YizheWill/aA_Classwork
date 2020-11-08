@@ -1,5 +1,6 @@
 class BandsController < ApplicationController
   before_action :set_band, only: [:show, :edit, :update, :destroy]
+  before_action :required_logged_in
 
   # GET /bands
   # GET /bands.json
@@ -26,14 +27,11 @@ class BandsController < ApplicationController
   def create
     @band = Band.new(band_params)
 
-    respond_to do |format|
-      if @band.save
-        format.html { redirect_to @band, notice: 'Band was successfully created.' }
-        format.json { render :show, status: :created, location: @band }
-      else
-        format.html { render :new }
-        format.json { render json: @band.errors, status: :unprocessable_entity }
-      end
+    if @band.save!
+      redirect_to band_url(@band)
+    else
+      flash.now[:errors] = @band.errors.full_messages #['']
+      render :new
     end
   end
 
@@ -62,13 +60,14 @@ class BandsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_band
-      @band = Band.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def band_params
-      params.require(:band).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_band
+    @band = Band.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def band_params
+    params.require(:band).permit(:name)
+  end
 end

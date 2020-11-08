@@ -1,19 +1,20 @@
 class User < ApplicationRecord
   attr_reader :password
 
-  after_initialize :ensure_session_token!
-  validates :username, :email, :password_digest, :session_token, presence: true
-  validates :username, uniqueness: { case_sensitive: false }, length: { maximum: 16 }
-  validates :email, uniqueness: { case_sensitive: false }
-  validates :session_token, uniqueness: true
+  before_validation :ensure_session_token!
+  validates :email, presence: true, uniqueness: true
+  validates :password_digest, presence: true
+  validates :session_token, presence: true, uniqueness: true
   validates :password, length: { minimum: 6, allow_nil: true }
+  has_many :bands
+  has_many :notes
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)
-    user&.is_password?(password) && user
+    user&.is_password?(password) ? user : nil
   end
 
   def self.generate_session_token
-    SecureRandom.urlsafe_base64
+    SecureRandom::urlsafe_base64
   end
 
   def password=(password)
@@ -22,13 +23,13 @@ class User < ApplicationRecord
   end
 
   def is_password?(password)
-    BCrypt::Password.new(password_digest) == password
+    BCrypt::Password.new(self.password_digest) == password
   end
 
   def reset_session_token!
     self.session_token = User.generate_session_token
-    save!
-    session_token
+    self.save!
+    self.session_token
   end
 
   private

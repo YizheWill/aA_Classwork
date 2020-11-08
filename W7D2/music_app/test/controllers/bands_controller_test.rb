@@ -17,7 +17,7 @@ class BandsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create band" do
     assert_difference('Band.count') do
-      post bands_url, params: { band: { name: @band.name } }
+      post bands_url, params: { band: { name: @band.name, user_id: @band.user_id } }
     end
 
     assert_redirected_to band_url(Band.last)
@@ -34,7 +34,7 @@ class BandsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update band" do
-    patch band_url(@band), params: { band: { name: @band.name } }
+    patch band_url(@band), params: { band: { name: @band.name, user_id: @band.user_id } }
     assert_redirected_to band_url(@band)
   end
 

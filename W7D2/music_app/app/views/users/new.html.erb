@@ -1,10 +1,12 @@
-<h1>Users#new</h1>
-<form action='<%= users_url =%>' method='POST'>
-  <label for='username'>username</label>
-  <input id='username' type='text' name='user[username]' >
-  <label for='email'>Email</label>
-  <input id='email' type='text' name='user[email]'>
-  <label for='password'>Password</label>
-  <input id='password' type='password' name='user[password]' >
-  <input type='submit' value='Sign up'>
+<h1>Sign Up User</h1>
+<%= button_to 'Sign in', new_session_url, method: :get %>
+<form action='<%= users_url %>' method='POST'>
+  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+  <label>Email
+    <input style='margin-top: 20px;' type='' name='user[email]' value='<%= @user.email %>'>
+  </label>
+  <label>Password
+    <input type='password' name='user[password]' value='<%= @user.password %>'>
+  </label>
+  <input type='submit' value='Sign Up'>
 </form>

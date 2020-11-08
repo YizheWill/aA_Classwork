@@ -1,0 +1,22 @@
+<h1><%= @track.album.name %></h1>
+<p>
+  <strong>TrackName:</strong>
+  <p>🎹<%= @track.name %></p>
+</p>
+<h3>New Note</h3>
+<form action='<%= track_notes_url(@track) %>' method='POST'>
+  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+  <!--<input type='hidden' name='_method' value=''>-->
+  <%= text_area(:note, :content, size: "20*20") %>
+  <input type='submit' value='Add New Note'>
+</form>
+<h1>NOTES</h1>
+<% @track.notes&.each do |note| %>
+  <p><%= note.content %></p>
+  <p>Authored by: <%= note.user.email %></p>
+  <hr>
+<% end %>
+<h1>LINKS</h1>
+<%= button_to 'Edit Track', edit_track_url(@track), method: :get %>
+<%= button_to 'Destroy Track', track_url(@track), method: :delete %>
+<%= button_to @track.album.name, album_url(@track.album), method: :get %>

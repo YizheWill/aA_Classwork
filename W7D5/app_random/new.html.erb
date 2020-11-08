@@ -1,0 +1,25 @@
+<% flash[:errors]&.each do |e| %>
+  <p><%= e %></p>
+<% end %>
+<h1>Sign In</h1>
+<form action='<%= session_url %>' method='POST'>
+  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+  <label>Username
+    <input type='' name='user[username]'>
+  </label>
+  <label>Password
+    <input type='password' name='user[password]'>
+  </label>
+  <input type='submit' value='Sign In'>
+</form>
+<h1>Sign Up User</h1>
+<form action='<%= users_url %>' method='POST'>
+  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+  <label>Username
+    <input type='' name='user[username]' value='<%= @user.username %>'>
+  </label>
+  <label>Password
+    <input type='password' name='user[password]' value='<%= @user.password %>'>
+  </label>
+  <input type='submit' value='Sign Up'>
+</form>

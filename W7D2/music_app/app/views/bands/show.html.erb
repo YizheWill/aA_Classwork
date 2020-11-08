@@ -1,9 +1,14 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @band.name %>
-</p>
-
-<%= link_to 'Edit', edit_band_path(@band) %> |
-<%= link_to 'Back', bands_path %>
+<h1><%= @band.name %></h1>
+<h2>ALBUMS</h2>
+<% if @band.albums.blank? %>
+  <p>This band has no albums... yet!</p>
+<% else %>
+  <% @band.albums.each do |album| %>
+    <%= button_to album.name, album_url(album), method: :get %>
+  <% end %>
+<% end %>
+<h2>LINKS</h2>
+<%= button_to 'New Album', new_band_album_url(@band), method: :get %>
+<%= button_to 'Edit Band', edit_band_url(@band), method: :get %>
+<%= button_to 'Destroy Band', band_url(@band), method: :delete %>
+<%= button_to 'All bands', bands_url, method: :get %>
