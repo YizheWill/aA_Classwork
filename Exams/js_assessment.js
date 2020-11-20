@@ -10,13 +10,9 @@ const ALPHABET = [...CHARS];
 const ALPHABETUPPERCASE = [...CHARS.toUpperCase()];
 const BASE = [...'0123456789abcdef'];
 const range = (startIdx, endIdx) =>
-  endIdx < startIdx
-    ? []
-    : [...Array(endIdx - startIdx).keys()].map((i) => i + startIdx);
+  endIdx < startIdx ? [] : [...Array(endIdx - startIdx).keys()].map((i) => i + startIdx);
 const charRange = (startChar, endChar) =>
-  String.fromCharCode(
-    ...range(startChar.charCodeAt(0), endChar.charCodeAt(0))
-  ).split('');
+  String.fromCharCode(...range(startChar.charCodeAt(0), endChar.charCodeAt(0))).split('');
 
 const anagrams = (str1, str2) => {
   let hash = {};
@@ -40,9 +36,7 @@ console.log(anagrams('abc', 'cba'));
 const subStrings = (string, size = 1) => {
   let res = [];
   for (let i = 0; i < string.length; i++) {
-    for (let j = i + size; j <= string.length; j++) {
-      res.push(string.slice(i, j));
-    }
+    for (let j = i + size; j <= string.length; j++) res.push(string.slice(i, j));
   }
   return res;
 };
@@ -56,8 +50,7 @@ String.prototype.realWordsInString = function (dictionary) {
 // Do not capitalize the following words (unless they are the first word in the
 // string): ["a", "and", "of", "over", "the"]
 
-const title = (string) =>
-  string[0].toUpperCase() + string.slice(1).toLowerCase();
+const title = (string) => string[0].toUpperCase() + string.slice(1).toLowerCase();
 const titleize = (string) => {
   const TITLES = ['a', 'and', 'of', 'over', 'the'];
   return string.split(' ').reduce((acc, ele, idx) => {
@@ -127,8 +120,13 @@ const pigLatinify = (sentence) => {
 // factorization of a given number. Assume num > 1
 //
 // primeFactorization(12) => [2,2,3]
-const isPrime = (num) =>
-  num >= 2 && !range(2, num).some((el) => num % el === 0);
+// const isPrime = (num) => num >= 2 && !range(2, num).some((el) => !(num % el));
+
+const isPrime = (num) => {
+  if (num < 2) return false;
+  for (let i = 2; i < num; i++) if (!(num % i)) return false;
+  return true;
+};
 
 const primeFactorization = (num) => {
   if (num === 1) return [];
@@ -238,20 +236,8 @@ const caesarCipher = (str, shift) => {
 // Choose a pivot element, then iterate over the rest of the array, moving the
 // remaining elements on to the appropriate side of the pivot. Recursively quick
 // sort each side of the array until a base case is reached.
-
-Array.prototype.quickSort = function (cb) {
-  cb = cb || ((a, b) => (a === b ? 0 : a < b ? -1 : 1));
-  if (this.length <= 1) return this;
-  let piv = this[0];
-  let left = [];
-  let right = [];
-  this.slice(1).forEach((el) =>
-    cb(el, piv) < 0 ? left.push(el) : right.push(el)
-  );
-  return left.quickSort(cb).concat(piv).concat(right.quickSort(cb));
-};
-
 // Write an `Array.prototype.bubbleSort(callback)` method, that bubble sorts an array.
+
 // It should take an optional callback that compares two elements, returning
 // -1 if the first element should appear before the second, 0 if they are
 // equal, and 1 if the first element should appear after the second. Do NOT call
@@ -282,25 +268,18 @@ Array.prototype.bubbleSort = function (cb) {
 // if the first element should appear after the second. Define and use a helper
 // method, `merge(left, right, comparator)`, to merge the halves.
 //
-
-function merge(left, right, cb) {
-  let res = [];
-  while (left.length && right.length) {
-    cb(left[0], right[0]) <= 0
-      ? res.push(left.shift())
-      : res.push(right.shift());
-  }
-  return res.concat(left, right);
-}
-
-Array.prototype.mergeSort = function (cb) {
-  cb = cb || ((a, b) => (a === b ? 0 : a < b ? -1 : 1));
-  if (this.length <= 1) return this;
-  let mid = parseInt(this.length / 2);
-  let left = this.slice(0, mid).mergeSort(cb);
-  let right = this.slice(mid).mergeSort(cb);
-  return merge(left, right, cb);
+Array.prototype.mergeSort = function (c) {
+  if (this.length < 2) return this;
+  c = c || ((a, b) => Math.sign(a - b));
+  let m = parseInt(this.length / 2);
+  return merge(this.slice(0, m).mergeSort(c), this.slice(m).mergeSort(c), c);
 };
+
+function merge(l, r, c) {
+  let f = [];
+  while (l.length && r.length) f.push(c(l[0], r[0]) < 0 ? l.shift() : r.shift());
+  return f.concat(l, r);
+}
 
 // **IMPORTANT: Make sure to use a function declaration (`function merge`) as
 // opposed to a function expression (`const merge = function`) for `merge`. Do
@@ -360,15 +339,13 @@ const jumbleSort = (str, alphabet = ALPHABET) => {
 // and are completely different objects in memory than those in the original
 // array.
 
+function deepDup(array) {
+  return array.map((el) => (Array.isArray(el) ? deepDup(el) : el));
+}
+
 // function deepDup(arr) {
 // return [...arr].map((el) => (Array.isArray(el) ? deepDup(el) : el));
 // }
-
-function deepDup(arr, depth = Infinity) {
-  return arr.map((el) =>
-    Array.isArray(el) ? (depth > 0 ? deepDup(el, depth - 1) : el) : el
-  );
-}
 // a = [1, 2, 3];
 // b = [1, 2, 3];
 // c = [1, 2, 3];
@@ -407,10 +384,7 @@ const digitalRoot = (num) => {
 // fibonacci numbers recursively. Assume n > 0.
 // Note that for this problem, the fibonacci sequence starts with [1, 1].
 
-const fib = (num) => {
-  if (num === 1 || num === 2) return 1;
-  else return fib(num - 1) + fib(num - 2);
-};
+const fib = (n) => (n === 1 || n === 2 ? 1 : fib(n - 1) + fib(n - 2));
 
 const fibArray = (num) => {
   if (num === 1) return [1];
@@ -545,11 +519,11 @@ Array.prototype.dups = function () {
 // where the elements at those positions sum to zero.
 
 Array.prototype.twoSum = function () {
+  let hash = {};
   let res = [];
   for (let i = 0; i < this.length; i++) {
-    for (let j = i + 1; j < this.length; j++) {
-      if (this[i] + this[j] == 0) res.push([i, j]);
-    }
+    if (hash[-this[i]]) res.push(...hash[-this[i]].map((el) => el !== i && [el, i]));
+    hash[this[i]] ? hash[this[i]].push(i) : (hash[this[i]] = [i]);
   }
   return res;
 };
@@ -585,9 +559,7 @@ Array.prototype.myRotate = function (times = 1) {
   if (!times) return this;
   times = times % this.length;
   while (times) {
-    times > 0
-      ? this.push(this.shift()) && times--
-      : this.unshift(this.pop()) && times++;
+    times > 0 ? this.push(this.shift()) && times-- : this.unshift(this.pop()) && times++;
   }
   return this;
 };
@@ -620,18 +592,9 @@ const transpose = (arr) => {
 // Example:
 // [["a"], "b", ["c", "d", ["e"]]].myFlatten() => ["a", "b", "c", "d", "e"]
 
-Array.prototype.myFlatten = function (depth = Infinity) {
-  let res = [];
-  this.forEach((el) =>
-    depth > 0
-      ? Array.isArray(el)
-        ? (res = res.concat(el.myFlatten(depth - 1)))
-        : res.push(el)
-      : el
-  );
-  return res;
+Array.prototype.myFlatten = function () {
+  return this.reduce((a, e) => a.concat(Array.isArray(e) ? e.myFlatten() : e), []);
 };
-
 // Write a function `myFind(array, callback)` that returns the first
 // element for which the callback returns true. If none is found, the
 // function should return `undefined`
@@ -647,38 +610,15 @@ const myFind = (arr, cb) => {
 // arguments to the function to be passed both at bind-time and call-time.
 // Note that you are NOT allowed to use ES6 arrow syntax for this problem.
 
-Function.prototype.myBind = function (obj, ...funcArgs) {
-  let that = this;
-  return function (...callArgs) {
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    return that.apply(obj, funcArgs.concat(callArgs));
-  };
-};
-
 // Write a `Function.prototype.myCall(context)` method, that accepts an object,
 // and any number of additional arguments. It should call the function with the
 // passed-in object as `this`, also passing the remaining arguments. Do NOT use
 // the built-in `Function.prototype.call` or `Function.prototype.apply` methods
 // in your implementation.
 
-Function.prototype.myCall = function (obj, ...funcArgs) {
-  return this.bind(obj)(...funcArgs);
-};
-
 // Write a `Function.prototype.myCurry(numArgs)` method that collects arguments
 // until the number of arguments collected is equal to the original `numArgs`
 // value and then invokes the curried function.
-
-Function.prototype.myCurry = function (numArgs) {
-  let callArgs = [];
-  let that = this;
-  return function _curry(...args) {
-    callArgs = callArgs.concat(...args);
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    if (callArgs.length < numArgs) return _curry;
-    else return that(...callArgs);
-  };
-};
 
 // Write a `Function.prototype.myApply(context, argsArr)` method that accepts an
 // object and an array of additional arguments. It should call the function with
@@ -686,9 +626,6 @@ Function.prototype.myCurry = function (numArgs) {
 // the built-in `Function.prototype.apply` or `Function.prototype.call` methods
 // in your implementation.
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-Function.prototype.myApply = function (obj, argsArr = []) {
-  return this.bind(obj)(...argsArr);
-};
 
 // Write a `Function.prototype.inherits(ParentClass)` method. It should extend
 // the methods of `ParentClass.prototype` to `ChildClass.prototype`.
@@ -696,27 +633,20 @@ Function.prototype.myApply = function (obj, argsArr = []) {
 // **Do NOT use `Object.create`, `Object.assign`, `Object.setPrototypeOf`, or
 // modify the `__proto__` property of any object directly.**
 
-Function.prototype.inherits = function (Parent) {
-  // function Surrogate() {}
-  // Surrogate.prototype = Parent.prototype;
-  // this.prototype = new Surrogate();
-  // this.prototype.constructor = this;
-  for (const key in Parent.prototype) {
-    this.prototype[key] = Parent.prototype[key]; //.bind(this);
-  }
-  this.prototype.constructor = this;
-};
+// function Surrogate() {}
+// Surrogate.prototype = Parent.prototype;
+// this.prototype = new Surrogate();
+// this.prototype.constructor = this;
+// for (const key in Parent.prototype) {
+//   this.prototype[key] = Parent.prototype[key]; //.bind(this);
+// }
+// this.prototype.constructor = this;
 
 // Write an `Array.prototype.myFilter(callback)` that takes a callback and
 // returns a new array which includes every element for which the callback
 // returned true. Use the `Array.prototype.myEach` method you defined above. Do
 // NOT call the built-in `Array.prototype.filter` or `Array.prototype.forEach`
 // methods.
-Array.prototype.myEach = function (cb) {
-  for (let i = 0; i < this.length; i++) {
-    cb(this[i]); // should be cb(this[i], i, this);
-  }
-};
 
 Array.prototype.myFilter = function (cb) {
   let res = [];
@@ -785,3 +715,39 @@ Array.prototype.myReject = function (cb) {
 // Write an `Array.prototype.myEach(callback)` method that invokes a callback
 // for every element in an array and returns undefined. Do NOT use the built-in
 // `Array.prototype.forEach`.
+
+Function.prototype.myCurry = function (numArgs) {
+  let [that, args] = [this, []];
+  return function _(...cArgs) {
+    return args.push(...cArgs) < numArgs ? _ : that.apply(null, args);
+  };
+};
+Array.prototype.myEach = function (cb) {
+  for (let i = 0; i < this.length; i++) cb(this[i]);
+};
+Function.prototype.myCall = function (obj, ...args) {
+  return this.bind(obj)(...args);
+};
+Function.prototype.myApply = function (obj, argsArr = []) {
+  return this.bind(obj)(...argsArr);
+};
+Function.prototype.myBind = function (obj, ...funcArgs) {
+  let that = this;
+  return function (...callArgs) {
+    return that.call(obj, ...funcArgs, ...callArgs);
+  };
+};
+Function.prototype.inherits = function (ParentClass) {
+  function S() {}
+  S.prototype = ParentClass.prototype;
+  this.prototype = new S();
+  this.prototype.constructor = this;
+};
+
+Array.prototype.quickSort = function (cb) {
+  if (this.length < 2) return this;
+  cb = cb || ((a, b) => Math.sign(a - b));
+  let [p, l, r] = [this[0], [], []];
+  this.slice(1).forEach((e) => (cb(e, p) < 0 ? l.push(e) : r.push(e)));
+  return l.quickSort(cb).concat(p).concat(r.quickSort(cb));
+};
