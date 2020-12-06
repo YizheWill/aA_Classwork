@@ -19,6 +19,11 @@ appropriate action to the store on form submission as an `action` prop.
 */
 
 class EditPostForm extends React.Component {
+  componentDidMount() {
+    console.log(this.props);
+    console.log(this.props.post);
+    this.props.fetchPost(this.props.match.params.postId);
+  }
   render() {
     // DO NOT MODIFY THIS FUNCTION
     const { action, formType, post } = this.props;
@@ -26,11 +31,21 @@ class EditPostForm extends React.Component {
     // Hint: The post will not exist on the first render - what do we need to do
     // to get it?
     if (!post) return null;
-    return (
-      <PostForm
-        action={action}
-        formType={formType}
-        post={post} />
-    );
+    return <PostForm action={action} formType={formType} post={post} />;
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    post: state.posts[ownProps.match.params.postId],
+    formType: 'Update Post',
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchPost: (postId) => dispatch(fetchPost(postId)),
+    action: (post) => dispatch(updatePost(post)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditPostForm);

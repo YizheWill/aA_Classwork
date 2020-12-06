@@ -7,3 +7,5 @@ Export a `configureStore` function that takes in a `preloadedState` parameter
 and returns a store created with the `RootReducer`, `preloadedState`, and
 `thunk` middleware.
 */
+export default (preloadedState = {}) =>
+  createStore(RootReducer, preloadedState, applyMiddleware(thunk));

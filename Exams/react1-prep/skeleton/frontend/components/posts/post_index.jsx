@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PostIndexItem from './post_index_item';
 import CreatePostFormContainer from './create_post_form_container';
 
@@ -8,3 +8,21 @@ Export a `PostIndex` presentational component that renders a list (`ul`) of
 via its container and fetch them once it has successfully mounted to the DOM.
 Below the `ul`, render the `CreatePostFormContainer` component.
 */
+
+function PostIndex({ posts, deletePost, fetchPosts }) {
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+  return (
+    <div>
+      <ul>
+        {posts.map((post) => (
+          <PostIndexItem post={post} key={post.id} deletePost={deletePost} />
+        ))}
+      </ul>
+      <CreatePostFormContainer />
+    </div>
+  );
+}
+
+export default PostIndex;

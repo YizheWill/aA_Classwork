@@ -10,3 +10,23 @@ the following:
 2. A link to the post's edit page with text 'Edit'.
 3. A button to delete the post.
 */
+
+function PostIndexItem({ post, deletePost }) {
+  return (
+    <div>
+      <li>
+        <label>
+          Title
+          <Link to={`/posts/${post.id}`}>{post.title}</Link>
+        </label>
+        <label>
+          edit button
+          <Link to={`/posts/${post.id}/edit`}>Edit</Link>
+        </label>
+        <button onClick={() => deletePost(post.id)}>delete</button>
+      </li>
+    </div>
+  );
+}
+
+export default PostIndexItem;

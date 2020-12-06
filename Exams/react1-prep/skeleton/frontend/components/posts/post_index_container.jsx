@@ -8,3 +8,17 @@ from the store as a `posts` prop. Additionally, it should map in functions that
 will dispatch `fetchPosts` and `deletePost` to the store as props of the same
 name.
 */
+
+const mapStateToProps = (state) => {
+  return {
+    posts: Object.values(state.posts),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchPosts: () => dispatch(fetchPosts()),
+    deletePost: (id) => dispatch(deletePost(id)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(PostIndex);

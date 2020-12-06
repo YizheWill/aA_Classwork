@@ -7,13 +7,13 @@ Export the following API Util functions with the specified parameters:
 4. `updatePost(post)`
 5. `deletePost(postId)`
 */
-export const fetchPosts = () => $.ajax({ method: 'GET', url: '/api/users' });
+
+export const fetchPosts = () => $.ajax({ method: 'get', url: '/api/posts' });
 export const fetchPost = (postId) =>
-  $.ajax({ method: 'GET', url: `/api/users/${postId}` });
+  $.ajax({ method: 'get', url: `/api/posts/${postId}` });
 export const createPost = (post) =>
-  $.ajax({ method: 'POST', url: '/api/users', data: { post } });
+  $.ajax({ method: 'post', url: '/api/posts', data: { post } });
 export const updatePost = (post) =>
-  $.ajax({ method: 'PATCH', url: `/api/users/${post.id}`, data: { post } });
+  $.ajax({ method: 'patch', url: `/api/posts/${post.id}`, data: { post } });
 export const deletePost = (postId) =>
-  $.ajax({ method: 'DELETE', url: `/api/users/${postId}` });
-export const deletePost = (postId) => $.ajax({ method: 'DELETE',})
+  $.ajax({ method: 'delete', url: `/api/posts/${postId}` });
