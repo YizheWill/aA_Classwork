@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 /*
@@ -10,3 +9,20 @@ the following:
 2. A link to the post's edit page with text 'Edit'.
 3. A button to delete the post.
 */
+
+import React, { Component } from 'react';
+
+export class PostIndexItem extends Component {
+  render() {
+    const { post, deletePost } = this.props;
+    return (
+      <div>
+        <Link to={`/posts/${post.id}`}>{post.title}</Link>
+        <Link to={`/posts/${post.id}/edit`}>Edit</Link>
+        <button onClick={() => deletePost(post.id)}>DeletePost</button>
+      </div>
+    );
+  }
+}
+
+export default PostIndexItem;
