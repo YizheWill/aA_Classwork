@@ -20,7 +20,7 @@ export class PostIndex extends Component {
       <div>
         <ul>
           {posts.map((post) => (
-            <PostIndexItem key={post.id} post={post} deletePost={deletePost} />
+            <PostIndexItem post={post} key={post.id} deletePost={deletePost} />
           ))}
         </ul>
         <CreatePostFormContainer />

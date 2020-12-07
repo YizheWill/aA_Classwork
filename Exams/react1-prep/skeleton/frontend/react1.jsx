@@ -1,3 +1,4 @@
+import { configure } from 'enzyme';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './components/root';
@@ -10,6 +11,5 @@ prop passed in, inside the div with id 'root'.
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root');
-  const store = configureStore();
-  ReactDOM.render(<Root store={store} />, root);
+  ReactDOM.render(<Root store={configureStore()} />, root);
 });

@@ -18,7 +18,7 @@ export class PostShow extends Component {
     return (
       <div>
         <h2>{post.title}</h2>
-        <h5>{post.body}</h5>
+        <h2>{post.body}</h2>
         <Link to='/'>PostIndex</Link>
       </div>
     );

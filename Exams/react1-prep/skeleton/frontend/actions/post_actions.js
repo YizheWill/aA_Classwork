@@ -15,6 +15,7 @@ Export the following thunk action creators with the specified parameters:
 4. `updatePost(post)`
 5. `deletePost(postId)`
 */
+
 export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS';
 export const RECEIVE_POST = 'RECEIVE_POST';
 export const REMOVE_POST = 'REMOVE_POST';

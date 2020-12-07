@@ -12,10 +12,7 @@ submission as an `action` prop.
 */
 
 const mapStateToProps = (state, ownProps) => ({
-  post: {
-    title: '',
-    body: '',
-  },
+  post: { title: '', body: '' },
   formType: 'Create Post',
 });
 
